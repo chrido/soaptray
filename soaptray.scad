@@ -3,7 +3,7 @@
 module rounded_base_box(x, y, z, rounding) {
 	minkowski() {
  		cube([x,y,z]);
- 		cylinder(r=rounding,h=rounding);
+ 		cylinder(r=rounding,h=1);
 	}
 }
 
@@ -12,7 +12,7 @@ module soaptray(x, y, z, thicknessFrame, totalbars) {
 
    lower = 2;
    
-	rounding = (thicknessFrame/2);
+	rounding = (thicknessFrame*0.75);
 	beginBars = (rounding/2) + thicknessFrame;
    barWidth = (x - (2*beginBars))/((totalbars*2)-1);
 	echo("beginBars:", beginBars);
@@ -22,7 +22,7 @@ module soaptray(x, y, z, thicknessFrame, totalbars) {
 	
    union() {
 	difference(){
-		rounded_base_box(x, y, z);
+		rounded_base_box(x, y, z, rounding);
    	translate([thicknessFrame, thicknessFrame, 0]) {
 			rounded_base_box(x-(thicknessFrame*2), y-(thicknessFrame*2), z, rounding);
 		}
@@ -30,11 +30,11 @@ module soaptray(x, y, z, thicknessFrame, totalbars) {
    
    difference() {
        for(i = [0 : countBars]) {
-		     translate([(barWidth*i*2)+beginBars, 0, lower]) 
-			  cube([barWidth, y, z-(2*lower)]);
+		     translate([(barWidth*i*2)+beginBars, 0, 0]) 
+			  cube([barWidth, y, z]);
 	    }
        //recess
-       translate([(x/2),(y/2),thicknessFrame+(lower*2)]) 
+       translate([(x/2),(y/2),thicknessFrame+(lower)]) 
            resize(newsize=[x-thicknessFrame-lower, y-thicknessFrame-lower, z]) 
                sphere(r=100);	
    }
@@ -42,7 +42,7 @@ module soaptray(x, y, z, thicknessFrame, totalbars) {
 }
 
 
-soaptray(120, 80, 15, 10, 12);
+soaptray(120, 80, 10, 8, 12);
 
 
 
