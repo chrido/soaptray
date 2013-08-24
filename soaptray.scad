@@ -10,7 +10,7 @@ module rounded_base_box(x, y, z, rounding) {
 module soaptray(x, y, z, thicknessFrame, totalbars) {
 	echo("rendering a soapbox with x=", x, " and y=", y);
 
-   lower = 2;
+   lower = 1;
    
 	rounding = (thicknessFrame*0.75);
 	beginBars = (rounding/2) + thicknessFrame;
@@ -31,10 +31,10 @@ module soaptray(x, y, z, thicknessFrame, totalbars) {
    difference() {
        for(i = [0 : countBars]) {
 		     translate([(barWidth*i*2)+beginBars, 0, 0]) 
-			  cube([barWidth, y, z]);
+			  cube([barWidth, y, z-lower]);
 	    }
        //recess
-       translate([(x/2),(y/2),thicknessFrame+(lower)]) 
+       translate([(x/2),(y/2),z]) 
            resize(newsize=[x-thicknessFrame-lower, y-thicknessFrame-lower, z]) 
                sphere(r=100);	
    }
@@ -42,7 +42,7 @@ module soaptray(x, y, z, thicknessFrame, totalbars) {
 }
 
 
-soaptray(120, 80, 10, 8, 12);
+soaptray(100, 80, 10, 7, 8);
 
 
 
